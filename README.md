@@ -1,0 +1,2 @@
+# SOJ
+Strojově orientované jazyky
