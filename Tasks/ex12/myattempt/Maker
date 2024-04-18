@@ -1,0 +1,20 @@
+TARGET=float
+
+ARCH=64
+
+ifeq ($(ARCH), 32)
+CFLAGS += -m32
+endif
+
+CFLAGS += $(shell gcc -v 2>&1 | grep enable-default-pie > /dev/null && echo \-no\-pie)
+CFLAGS += -g  -fsanitize=address -static-libasan
+
+all: $(TARGET)
+
+
+
+clean:
+	rm -rf $(TARGET) *.o
+
+$(TARGET): float.cpp
+	cc $(CFLAGS)  float.cpp -o $(TARGET)

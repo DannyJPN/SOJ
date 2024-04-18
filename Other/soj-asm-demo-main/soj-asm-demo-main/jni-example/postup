@@ -1,0 +1,17 @@
+#!/bin/sh
+
+export JAVA_HOME=$HOME/jdk
+# pro hledani knihovny
+export LD_LIBRARY_PATH=.
+
+# nejprve prelozit java->class
+javac Moje.java
+
+# vytvoreni Moje.h pro C/C++
+javah -jni Moje
+
+# napiseme Moje.cpp a vytvorime dynamickou knihovnu
+g++ -fPIC -I. -I $JAVA_HOME/include/ -I $JAVA_HOME/include/linux/ Moje.cpp -shared -o libmoje.so
+
+# spusteni
+java Moje
